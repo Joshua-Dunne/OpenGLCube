@@ -47,19 +47,19 @@ class Matrix3
 
 	Matrix3 Inverse(Matrix3 M1);
 
-	Matrix3 Rotation(int _angle);
+	Matrix3 Rotation(double _angle);
 		
-	Matrix3 Translate(int dx, int dy);
+	Matrix3 Translate(double dx, double dy);
 
 	Matrix3 Scale(int dx, int dy);
 
 	Matrix3 operator -();
 
-	static Matrix3 RotationX(int _angle);
+	static Matrix3 RotationX(double _angle);
 		
-	static Matrix3 RotationY(int _angle);
+	static Matrix3 RotationY(double _angle);
 		
-	static Matrix3 RotationZ(int _angle);
+	static Matrix3 RotationZ(double _angle);
 
 	Matrix3 Scale3D(int dx);
 

@@ -26,6 +26,82 @@ void Game::run()
 			{
 				isRunning = false;
 			}
+
+			if (event.type == sf::Event::KeyPressed)
+			{
+				Matrix3 translationMatrix;
+				Matrix3 rotationMatrix;
+
+				if (event.key.code == sf::Keyboard::D)
+				{
+					translationMatrix = translationMatrix.Translate(-0.1, 0);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = translationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::A)
+				{
+					translationMatrix = translationMatrix.Translate(0.1, 0);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = translationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::W)
+				{
+					translationMatrix = translationMatrix.Translate(0, -0.1);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = translationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::S)
+				{
+					translationMatrix = translationMatrix.Translate(0, 0.1);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = translationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::Z)
+				{
+					rotationMatrix = rotationMatrix.RotationZ(-2);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = rotationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::X)
+				{
+					rotationMatrix = rotationMatrix.RotationX(2);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = rotationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::C)
+				{
+					rotationMatrix = rotationMatrix.RotationY(2);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = rotationMatrix * points[index];
+					}
+				}
+			}
 		}
 		update();
 		draw();
@@ -42,6 +118,9 @@ void Game::initialize()
 	glLoadIdentity();
 	gluPerspective(45.0, window.getSize().x / window.getSize().y, 1.0, 500.0);
 	glMatrixMode(GL_MODELVIEW);
+
+	glTranslatef(0, 0, -8.0f);
+	glEnable(GL_CULL_FACE);
 
 	// glNewList(index, GL_COMPILE);
 	// Creates a new Display List
@@ -67,10 +146,50 @@ void Game::initialize()
 		glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
 
 		glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
-		glVertex3f(points[5].getX(), points[5].getY(), points[4].getZ());
-		glVertex3f(points[6].getX(), points[6].getY(), points[4].getZ());
+		glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+		glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
 
-		//Complete the faces of the Cube
+		////Top Face
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+		//glVertex3f(points[7].getX(), points[7].getY(), points[7].getZ());
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+		//glVertex3f(points[2].getX(), points[2].getY(), points[2].getZ());
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+
+		////Bottom Face
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		//glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+		//glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+		//glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+
+		//glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+		//glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+		//glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+
+		////Left Face
+		//glColor3f(1.0f, 1.0f, 0.0f);
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+		//glVertex3f(points[7].getX(), points[7].getY(), points[7].getZ());
+		//glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+
+		//glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+		//glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+
+		////Right Face
+		//glColor3f(1.0f, 1.0f, 0.0f);
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+		//glVertex3f(points[2].getX(), points[2].getY(), points[2].getZ());
+		//glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+
+		//glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+		//glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+
+		////Complete the faces of the Cube
 	}
 	glEnd();
 	glEndList();
@@ -78,31 +197,10 @@ void Game::initialize()
 
 void Game::update()
 {
-	elapsed = clock.getElapsedTime();
-
-	if (elapsed.asSeconds() >= 1.0f)
-	{
-		clock.restart();
-
-		if (!updatable)
-		{
-			updatable = true;
-		}
-		else
-			updatable = false;
-	}
-
-	if (updatable)
-	{
-		rotationAngle += 0.005f;
-
-		if (rotationAngle > 360.0f)
-		{
-			rotationAngle -= 360.0f;
-		}
-	}
-	
 	cout << "Update up" << endl;
+
+	glDeleteLists(0, 1);
+	updateGL();
 }
 
 void Game::draw()
@@ -112,7 +210,7 @@ void Game::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	cout << "Drawing Cube " << endl;
-	glLoadIdentity();
+	//glLoadIdentity();
 	glRotatef(rotationAngle, 0, 0, 1); // Rotates the camera on Y Axis
 
 	glCallList(1);
@@ -124,5 +222,76 @@ void Game::draw()
 void Game::unload()
 {
 	cout << "Cleaning up" << endl;
+}
+
+void Game::updateGL()
+{
+	glNewList(index, GL_COMPILE);
+	glBegin(GL_TRIANGLES);
+	{
+		//Front Face
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(points[2].getX(), points[2].getY(), points[2].getZ());
+		glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+		glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+
+		glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+		glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+		glVertex3f(points[2].getX(), points[2].getY(), points[2].getZ());
+
+		//Back Face
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+		glVertex3f(points[7].getX(), points[7].getY(), points[7].getZ());
+		glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+
+		glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+		glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+		glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+
+		////Top Face
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+		//glVertex3f(points[7].getX(), points[7].getY(), points[7].getZ());
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+		//glVertex3f(points[2].getX(), points[2].getY(), points[2].getZ());
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+
+		////Bottom Face
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		//glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+		//glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+		//glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+
+		//glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+		//glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+		//glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+
+		////Left Face
+		//glColor3f(1.0f, 1.0f, 0.0f);
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+		//glVertex3f(points[7].getX(), points[7].getY(), points[7].getZ());
+		//glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+
+		//glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
+		//glVertex3f(points[0].getX(), points[0].getY(), points[0].getZ());
+		//glVertex3f(points[3].getX(), points[3].getY(), points[3].getZ());
+
+		////Right Face
+		//glColor3f(1.0f, 1.0f, 0.0f);
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+		//glVertex3f(points[2].getX(), points[2].getY(), points[2].getZ());
+		//glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+
+		//glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
+		//glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
+		//glVertex3f(points[6].getX(), points[6].getY(), points[6].getZ());
+
+		//Complete the faces of the Cube
+	}
+	glEnd();
+	glEndList();
 }
 

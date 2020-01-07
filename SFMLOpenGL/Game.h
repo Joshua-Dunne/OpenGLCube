@@ -24,6 +24,7 @@ private:
 	void update();
 	void draw();
 	void unload();
+	void updateGL();
 
 	GLuint index;
 	sf::Clock clock;
@@ -32,14 +33,14 @@ private:
 	float rotationAngle = 0.0f;
 
 	Vector3 v3{ 1,1,1 };
-	Vector3 points[8]{	{-1.0f, -1.0f, -5.0f}, 
-						{1.0f, -1.0f, -5.0f},
-						{1.0f, 1.0f, -5.0f},
-						{-1.0f, 1.0f, -5.0f},
+	Vector3 points[8]{	{-1.0f, -1.0f, 1.0f}, 
+						{1.0f, -1.0f, 1.0f},
+						{1.0f, 1.0f, 1.0f},
+						{-1.0f, 1.0f, 1.0f},
 
-						{-1.0f, -1.0f, -15.0f},
-						{1.0f, -1.0f, -15.0f},
-						{1.0f, 1.0f, -15.0f},
-						{-1.0f, 1.0f, -15.0f}
+						{-1.0f, -1.0f, -1.0f},
+						{1.0f, -1.0f, -1.0f},
+						{1.0f, 1.0f, -1.0f},
+						{-1.0f, 1.0f, -1.0f}
 					};
 };
