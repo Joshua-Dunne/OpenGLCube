@@ -31,6 +31,7 @@ void Game::run()
 			{
 				Matrix3 translationMatrix;
 				Matrix3 rotationMatrix;
+				Matrix3 scaleMatrix;
 
 				if (event.key.code == sf::Keyboard::D)
 				{
@@ -99,6 +100,26 @@ void Game::run()
 					for (int index = 0; index < 8; index++)
 					{
 						points[index] = rotationMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::F)
+				{
+					scaleMatrix = scaleMatrix.Scale(101, 101);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = scaleMatrix * points[index];
+					}
+				}
+
+				if (event.key.code == sf::Keyboard::G)
+				{
+					scaleMatrix = scaleMatrix.Scale(99, 99);
+
+					for (int index = 0; index < 8; index++)
+					{
+						points[index] = scaleMatrix * points[index];
 					}
 				}
 			}
@@ -205,7 +226,7 @@ void Game::updateGL()
 		glVertex3f(points[4].getX(), points[4].getY(), points[4].getZ());
 		glVertex3f(points[5].getX(), points[5].getY(), points[5].getZ());
 		glVertex3f(points[1].getX(), points[1].getY(), points[1].getZ());
-		
+
 
 		//Left Face
 		glColor3f(0.0f, 1.0f, 1.0f);
@@ -233,5 +254,5 @@ void Game::updateGL()
 	}
 	glEnd();
 	glEndList();
-}
 
+}

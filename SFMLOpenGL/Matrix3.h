@@ -51,7 +51,7 @@ class Matrix3
 		
 	Matrix3 Translate(double dx, double dy);
 
-	Matrix3 Scale(int dx, int dy);
+	Matrix3 Scale(double dx, double dy);
 
 	Matrix3 operator -();
 
@@ -61,7 +61,7 @@ class Matrix3
 		
 	static Matrix3 RotationZ(double _angle);
 
-	Matrix3 Scale3D(int dx);
+	Matrix3 Scale3D(double dx);
 
 	Vector3 operator *(Vector3 V1);
 
